@@ -12,7 +12,7 @@ import {
   handlePrivacy,
 } from "./commands";
 import { handleMessage, handleCallbackQuery } from "./handlers";
-import { GrammyError } from "grammy";
+import { GrammyError, HttpError } from "grammy";
 
 async function setCommands() {
   try {
@@ -43,12 +43,15 @@ export function setupBot() {
   setCommands();
 
   bot.catch((err) => {
-    if (err instanceof GrammyError) {
-      if (err.error_code === 403) {
-        console.log(`User has blocked the bot.`);
-      }
+    const ctx = err.ctx;
+    console.error(`Error while handling update ${ctx.update.update_id}:`);
+    const e = err.error;
+    if (e instanceof GrammyError) {
+      console.error("Error in request:", e.description);
+    } else if (e instanceof HttpError) {
+      console.error("Could not contact Telegram:", e);
     } else {
-      console.error("Unexpected error:", err);
+      console.error("Unknown error:", e);
     }
   });
 

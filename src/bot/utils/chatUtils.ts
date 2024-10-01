@@ -41,7 +41,7 @@ export async function forwardMessageToPartner(ctx: Context, user: IUser) {
   }
 }
 
-async function sendMessage(chatId: number, text: string) {
+export async function sendMessage(chatId: number, text: string) {
   try {
     await bot.api.sendMessage(chatId, text);
   } catch (error) {

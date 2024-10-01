@@ -1,5 +1,5 @@
 import { Context } from "grammy";
-import { getOrCreateUser } from "../utils";
+import { getOrCreateUser, sendMessage } from "../utils";
 import { User } from "../../database";
 
 export async function handleLeave(ctx: Context) {
@@ -9,9 +9,13 @@ export async function handleLeave(ctx: Context) {
     if (partner) {
       partner.currentPartner = null;
       await partner.save();
-      await ctx.api.sendMessage(
+      // await ctx.api.sendMessage(
+      //   partner.telegramId,
+      //   "Your chat partner has left the conversation."
+      // );
+      await sendMessage(
         partner.telegramId,
-        "Your chat partner has left the conversation."
+        `Your chat partner has left the conversation.`
       );
     }
     user.currentPartner = null;
