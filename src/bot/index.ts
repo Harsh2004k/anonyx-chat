@@ -12,6 +12,7 @@ import {
   handlePrivacy,
 } from "./commands";
 import { handleMessage, handleCallbackQuery } from "./handlers";
+import { GrammyError } from "grammy";
 
 async function setCommands() {
   try {
@@ -40,6 +41,16 @@ export function setupBot() {
 
   // Set the commands for the bot
   setCommands();
+
+  bot.catch((err) => {
+    if (err instanceof GrammyError) {
+      if (err.error_code === 403) {
+        console.log(`User has blocked the bot.`);
+      }
+    } else {
+      console.error("Unexpected error:", err);
+    }
+  });
 
   return bot;
 }
