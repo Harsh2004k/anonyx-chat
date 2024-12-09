@@ -94,8 +94,5 @@ export const privacyPolicy = `
    • We may update this policy from time to time.
    • Significant changes will be communicated through the bot.
 
-9. Contact Us:
-   • For privacy concerns or questions, contact @harsh_693 .
-
 By using this bot, you consent to the collection and use of your information as described in this privacy policy.
 `;
